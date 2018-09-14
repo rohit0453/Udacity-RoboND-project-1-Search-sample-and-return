@@ -1,5 +1,5 @@
 ## Project #1: Search and Sample Return
-Project submission for the Udacity Robotics Software Engineer Nanodegree by **Rohit Kumar Mishra
+Project submission for the Udacity Robotics Software Engineer Nanodegree by **Rohit Kumar Mishra**
 
 ---
 
