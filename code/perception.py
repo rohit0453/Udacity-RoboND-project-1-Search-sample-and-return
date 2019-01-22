@@ -14,8 +14,12 @@ def color_thresh(img, rgb_thresh=(160, 160, 160)):
                 & (img[:,:,2] > rgb_thresh[2])
     # Index the array of zeros with the boolean array and set to 1
     color_select[above_thresh] = 1
-    # Return the binary image
-    return color_select
+    kernel1 = np.ones((5,5),np.uint8)
+    
+    dilation1 = cv2.dilate(color_select,kernel1,iterations = 1)
+    
+    erosion1 = cv2.erode(dilation1,kernel1,iterations = 1)
+    return erosion1
 def rock_finder(img, thresh_low=(130, 111, 0), thresh_high=(211, 170, 40)):
 
     colorsel = np.zeros_like(img[:,:,0])
@@ -23,7 +27,15 @@ def rock_finder(img, thresh_low=(130, 111, 0), thresh_high=(211, 170, 40)):
     within_thresh = (img[:,:,0] > thresh_low[0]) & (img[:,:,1] > thresh_low[1]) & (img[:,:,2] > thresh_low[2]) & (img[:,:,0] < thresh_high[0]) & (img[:,:,1] < thresh_high[1]) & (img[:,:,2] < thresh_high[2])
     
     colorsel[within_thresh] = 1
-    return colorsel
+    
+    kernel = np.ones((5,5),np.uint8)
+    
+    dilation = cv2.dilate(colorsel,kernel,iterations = 1)
+    
+    erosion = cv2.erode(dilation,kernel,iterations = 1)
+    return erosion
+threshed = color_thresh(warped)
+plt.imshow(threshed, cmap='gray')
 # Define a function to convert from image coords to rover coords
 def rover_coords(binary_img):
     # Identify nonzero pixels
